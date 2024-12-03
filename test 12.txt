@@ -1,0 +1,96 @@
+1. Citirea fișierului matrix_2.txt și afișarea ca numpy.ndarray:
+
+import numpy as np
+import pandas as pd
+
+# Citirea matricii din string-ul furnizat (simulează un fișier text)
+matrix_2_data = """31,32,33,34,35,36
+41,42,43,44,45,46
+51,52,53,54,55,56
+61,62,63,64,65,66
+71,72,73,74,75,76
+81,82,83,84,85,86
+91,92,93,94,95,96"""
+with open("matrix_2.txt", "w") as f:
+    f.write(matrix_2_data)
+
+# Citire fișier
+matrix_2 = np.loadtxt("matrix_2.txt", delimiter=",", dtype=int)
+print("Matrix 2:\n", matrix_2)
+
+2. Crearea unei noi matrice după modelul dat: matrix_3 = np.full((7, 7), 9)
+matrix_3[0, :] = matrix_3[-1, :] = 5
+matrix_3[:, 0] = matrix_3[:, -1] = 5
+matrix_3[1:-1, 1:-1] = 0
+
+print("Matrix 3:\n", matrix_3)
+
+3. Generare vector și creare pandas.Series: vector_100 = np.random.uniform(0, 10, 100)
+labels = [f"L_{i+1}" for i in range(100)]
+series = pd.Series(vector_100, index=labels)
+
+print("Series:\n", series)
+
+4. Creare matrice 2D și conversie în pandas.DataFrame: matrix_4 = np.random.uniform(0, 10, (11, 5))
+row_labels = [f"L{i+1}" for i in range(11)]
+col_labels = [f"C{i+1}" for i in range(5)]
+df = pd.DataFrame(matrix_4, index=row_labels, columns=col_labels)
+
+print("DataFrame:\n", df)
+
+5. Creare dicționar de studenți și DataFrame:students = {f"S_{i+1}": np.random.randint(1, 11, 7).tolist() for i in range(8)}
+df_students = pd.DataFrame(students)
+
+print("Students DataFrame:\n", df_students)
+
+
+6. Extrage sub-matricea valorilor 0: sub_matrix = matrix_3[1:-1, 1:-1]
+print("Sub-matrix:\n", sub_matrix)
+
+7. Creare dicționar pe ani de studiu: study_years = {
+    f"An{i+1}": {
+        f"Stud{j+1}": np.random.randint(1, 11, 5).tolist() for j in range(8)
+    }
+    for i in range(5)
+}
+df_years_list = []
+for year, students in study_years.items():
+    year_df = pd.DataFrame(students)
+    year_df.index = [f"Ex{k+1}" for k in range(5)]
+    year_df["Year"] = year
+    df_years_list.append(year_df)
+
+final_df_years = pd.concat(df_years_list)
+print("Final DataFrame of Study Years:\n", final_df_years)
+
+8. Citire fișiere Series_1.csv și Series_2.csv, creare DataFrame:# Salvăm datele într-un fișier CSV local pentru simulare
+series_1_data = """Label,Val
+Row11,1
+Row12,2
+Row13,3"""
+with open("Series_1.csv", "w") as f:
+    f.write(series_1_data)
+
+series_2_data = """Label,Val
+Row21,4
+Row22,5
+Row23,6"""
+with open("Series_2.csv", "w") as f:
+    f.write(series_2_data)
+
+# Citim fișierele și creăm DataFrame
+series_1 = pd.read_csv("Series_1.csv", index_col=0).iloc[:, 0]
+series_2 = pd.read_csv("Series_2.csv", index_col=0).iloc[:, 0]
+
+merged_series_dict = {"Col1": series_1, "Col2": series_2}
+merged_df_series = pd.DataFrame(merged_series_dict)
+
+print("Merged DataFrame:\n", merged_df_series)
+
+9. Creare matrice cu configurația specificată: matrix_5 = np.full((7, 7), 4)
+matrix_5[0, 0] = 11
+matrix_5[-1, -1] = 11
+matrix_5[3, 3] = 99
+matrix_5[0, -1] = matrix_5[-1, 0] = 11
+
+print("Configured Matrix:\n", matrix_5)
